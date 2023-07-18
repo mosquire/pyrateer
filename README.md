@@ -15,8 +15,8 @@ graph TB
     p2 --> I[Industry]
     p3 --> A[Asset Size]
     p3 --> D[Difference]
-    D --> R[Retention]
     D --> L[Limit]
+    D --> R[Retention]
 ```
 When the `calculate()` method is called on the root object, it calls the `calculate()` method on its child nodes. When a terminal node is reached, the factor is returned and when a non-terminal node is reached, the CompoundFactor calls the `calculate()` method on its children.
 

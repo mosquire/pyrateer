@@ -1,7 +1,14 @@
+---
+title: "Pyrateer Demo"
+---
+```{python}
 from pyrateer.factors import NumericFactor, CategoricalFactor, ConstantFactor
 import pickle
+```
 
+## Create the Rate Plan
 
+```{python}
 asset_size = NumericFactor(
     "Asset Size",
     {
@@ -88,9 +95,17 @@ industry = CategoricalFactor(
     }
 )
 loss_cost = ConstantFactor("Loss Cost", 1.7)
+```
 
+Once the rate plan factors have been created, they can be combined using arithmetic operators.
+
+```{python}
 rate_plan = asset_size * (limit - retention) * industry * loss_cost
+```
 
+## Test
+
+```{python}
 json_input = {
     "Asset Size": 1_200_000,
     "Limit": 5_000_000,
@@ -101,6 +116,10 @@ json_input = {
 rate = rate_plan.calculate(**json_input)
 
 print(rate)
+```
 
+## Pickle the Rate Plan
+```{python}
 with open("rate_plan.pkl", "wb") as f:
     pickle.dump(rate_plan, f)
+```

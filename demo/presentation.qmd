@@ -1,0 +1,62 @@
+---
+title: "Pyrateer Demo"
+author: "Morgan Squire"
+format: revealjs
+---
+
+## Actuarial Analysis
+
+- See Excel file
+
+## Pyrateer Package
+
+- Python rating engine
+- Uses base class for quick implementation of new subclasses
+  - `ConstantFactor` was added later in a matter of minutes
+- Overloads arithmetic operators so ROC formulas can be typed directly
+```{.python code-line-numbers="|1|2-7|8"}
+rate_plan = asset_size * (limit - retention) * industry * loss_cost
+json_input = {
+    "Asset Size": 1_200_000,
+    "Limit": 5_000_000,
+    "Retention": 1_000_000,
+    "Industry": "Hazard Group 2"
+}
+print(rate_plan.calculate(json_input))
+```
+
+## Classes
+
+- `RatingFactor`: base class
+  - `NumericFactor`: numeric inputs
+  - `CategoricalFactor`: categorical inputs
+  - `ConstantFactor`: no inputs
+  - `CompoundFactor`: the result of arithmetic operators
+
+## Compound Factors
+
+Created with arithmetic operators
+
+Has a special calculate function that calculates the component objects and combines them using the provided operator
+
+```{mermaid}
+graph TB
+    p1[Product] --> p2[Product]
+    p1 --> LC[Loss Cost Factor]
+    p2 --> p3[Product]
+    p2 --> I[Industry]
+    p3 --> A[Asset Size]
+    p3 --> D[Difference]
+    D --> L[Limit]
+    D --> R[Retention]
+```
+
+## Rate Plan PDFs
+
+See rate plan pdfs
+
+## Room for Improvement
+
+- Tree navigation functions
+- Interaction Factors
+- JSON rate_plan definition (better than pickling)
