@@ -1,4 +1,0 @@
-build
-pytest
-black
-jupyter
